@@ -37,6 +37,7 @@
 #include "ProcessLib/ComponentTransport/CreateComponentTransportProcess.h"
 #include "ProcessLib/GroundwaterFlow/CreateGroundwaterFlowProcess.h"
 #include "ProcessLib/HT/CreateHTProcess.h"
+#include "ProcessLib/HeatTransportBHE/CreateHeatTransportBHEProcess.h"
 #include "ProcessLib/HeatConduction/CreateHeatConductionProcess.h"
 #include "ProcessLib/HydroMechanics/CreateHydroMechanicsProcess.h"
 #include "ProcessLib/LIE/HydroMechanics/CreateHydroMechanicsProcess.h"
@@ -335,6 +336,13 @@ void ProjectData::parseProcesses(BaseLib::ConfigTree const& processes_config,
                 *_mesh_vec[0], std::move(jacobian_assembler),
                 _process_variables, _parameters, integration_order,
                 process_config);
+        }
+        else if (type == "HEAT_TRANSPORT_BHE")
+        {
+            process = ProcessLib::HeatTransportBHE::createHeatTransportBHEProcess(
+                *_mesh_vec[0], std::move(jacobian_assembler),
+                _process_variables, _parameters, integration_order,
+                process_config, _curves);
         }
         else if (type == "HYDRO_MECHANICS")
         {
