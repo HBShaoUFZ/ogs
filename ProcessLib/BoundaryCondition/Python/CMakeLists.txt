@@ -3,7 +3,6 @@ add_library(ProcessLibBoundaryConditionPython
     PythonBoundaryCondition.h
     PythonBoundaryConditionLocalAssembler.h
     PythonBoundaryConditionPythonSideInterface.h
-    BHEInflowPythonBoundaryCondition.cpp
     BHEInflowPythonBoundaryCondition.h
     BHEInflowPythonBoundaryConditionPythonSideInterface.h)
 if(BUILD_SHARED_LIBS)
