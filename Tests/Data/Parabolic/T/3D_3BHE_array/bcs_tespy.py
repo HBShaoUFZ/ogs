@@ -53,7 +53,9 @@ class BC(OpenGeoSys.BHENetwork):
         data_col_2 = df['Tout_val'].tolist()#'Tout_val'
         data_col_3 = df['Tout_node_id'].astype(int).tolist()#'Tout_node_id'
         t = 0#'initial time'
-        return (True, data_col_1,data_col_2,data_col_3, t)
+        get_hydraulics()
+        data_col_4 = df['f_velocity'].tolist()#'BHE flow rate'
+        return (True, t, data_col_1,data_col_2,data_col_3, data_col_4)
     def tespyThermalSolver(self, t, Tin_val, Tout_val):
         #read Tout_val to dataframe
         for i in range(n_BHE):
@@ -68,11 +70,11 @@ class BC(OpenGeoSys.BHENetwork):
             if_success = True
         #return to OGS
         return (True, if_success, cur_cal_Tin_val)
-    def tespyHydroSolver(self):
-        dataframe = get_hydraulics()
-        data_f_velocity = dataframe['f_velocity'].tolist()#'f_velocity'
+    def tespyHydroSolver(self, t):
+        #dataframe = get_hydraulics()
+        data_f_velocity = df['f_velocity'].tolist()#'f_velocity'
         #return to OGS
-        return (True, data_f_velocity)
+        return (False, data_f_velocity)
 # %% main
 #initialize the tespy model of the bhe network
 #load path of network model:
