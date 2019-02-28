@@ -19,24 +19,24 @@ class BHEInflowPythonBoundaryConditionPythonSideInterface
 public:
     /*!
      * Initialize network dataframe
-     * return a tuple (BHE inflow temperature, BHE outflow
-     * temperature, BHE outflow bc node id, time)
+     * return a tuple (time, BHE inflow temperature, BHE outflow
+     * temperature, BHE outflow bc node id, BHE flowrate)
      * set at that position and the parameters of the BHE network.
      */
     virtual std::tuple<bool,
+                       double /*time*/,
                        std::vector<double> /*Tin_val*/,
                        std::vector<double> /*Tout_val*/,
                        std::vector<int> /*bc_out_ids*/,
-                       double /*time*/>
+                       std::vector<double> /*BHE_flowrate*/>
     initializeDataContainer() const
     {
         _overridden_essential = false;
-        return std::tuple<bool,
-                          std::vector<double>,
-                          std::vector<double>,
+        return std::tuple<bool, double, std::vector<double>, std::vector<double>,
                           std::vector<int>,
-                          double>{
-            false, {}, {}, {}, std::numeric_limits<double>::quiet_NaN()};
+                          std::vector<double>>{false,
+                                   std::numeric_limits<double>::quiet_NaN(),
+                                   {}, {}, {}, {}};
     }
 
     /*!
@@ -84,10 +84,11 @@ public:
 
     // BHE network dataframe container
     std::tuple<bool,
+               double,
                std::vector<double>,
                std::vector<double>,
                std::vector<int>,
-               double>
+               std::vector<double>>
         dataframe_network;
 
     virtual ~BHEInflowPythonBoundaryConditionPythonSideInterface() = default;

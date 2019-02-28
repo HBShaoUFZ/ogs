@@ -25,10 +25,12 @@ public:
     using BHEInflowPythonBoundaryConditionPythonSideInterface::
         BHEInflowPythonBoundaryConditionPythonSideInterface;
 
-    std::tuple<bool, std::vector<double>, std::vector<double>, std::vector<int>, double>
+    std::tuple<bool, double, std::vector<double>, std::vector<double>,
+               std::vector<int>, std::vector<double>>
     initializeDataContainer() const override
     {
-        using Ret = std::tuple<bool, std::vector<double>, std::vector<double>, std::vector<int>, double>;
+        using Ret = std::tuple<bool, double, std::vector<double>, std::vector<double>,
+                       std::vector<int>, std::vector<double>>;
         PYBIND11_OVERLOAD(Ret,
                           BHEInflowPythonBoundaryConditionPythonSideInterface,
                           initializeDataContainer);

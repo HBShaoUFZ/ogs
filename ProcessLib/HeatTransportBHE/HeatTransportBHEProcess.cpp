@@ -205,28 +205,43 @@ NumLib::IterationResult HeatTransportBHEProcess::postIterationConcreteProcess(
     if (_process_data.if_bhe_network_exist_python_bc == false)
         return NumLib::IterationResult::SUCCESS;
 
-    // Here the task is to get the outflow temperature,
+    // Here the task is to get current time flowrate and flow temperature from TESPy
+    auto const Tout_nodes_id =
+        std::get<4>(_process_data.py_bc_object->dataframe_network);
+    const std::size_t n_bc_nodes = Tout_nodes_id.size();
+
+    // update flowrate in network if network exist a dynamic flowrate in time
+    auto const cur_time =
+        std::get<1>(_process_data.py_bc_object->dataframe_network);
+    if (std::get<0>(_process_data.py_bc_object->tespyHydroSolver(cur_time)))
+    {
+        // calculate the current flowrate in each BHE from TESPy
+        auto const cur_flowrate =
+            std::get<1>(_process_data.py_bc_object->tespyHydroSolver(cur_time));
+        for (std::size_t i = 0; i < n_bc_nodes; i++)
+            std::get<5>(_process_data.py_bc_object->dataframe_network)[i] =
+                cur_flowrate[i];
+    }
+
+    // get the outflow temperature,
     // transfer it to TESPy and to get inflow temperature,
     // and determine whether it converges.
-    auto const Tout_nodes_id =
-        std::get<3>(_process_data.py_bc_object->dataframe_network);
-    const std::size_t n_bc_nodes = Tout_nodes_id.size();
     for (std::size_t i = 0; i < n_bc_nodes; i++)
     {
         // read the T_out and store them in dataframe
-        std::get<2>(_process_data.py_bc_object->dataframe_network)[i] =
+        std::get<3>(_process_data.py_bc_object->dataframe_network)[i] =
             x[Tout_nodes_id[i]];
     }
     // Tout transfer to Python
     auto const tespy_result = _process_data.py_bc_object->tespyThermalSolver(
-        std::get<4>(_process_data.py_bc_object->dataframe_network),
         std::get<1>(_process_data.py_bc_object->dataframe_network),
-        std::get<2>(_process_data.py_bc_object->dataframe_network));
+        std::get<2>(_process_data.py_bc_object->dataframe_network),
+        std::get<3>(_process_data.py_bc_object->dataframe_network));
     auto const cur_Tin = std::get<2>(tespy_result);
 
     // update the T_in
     for (std::size_t i = 0; i < n_bc_nodes; i++)
-        std::get<1>(_process_data.py_bc_object->dataframe_network)[i] =
+        std::get<2>(_process_data.py_bc_object->dataframe_network)[i] =
             cur_Tin[i];
 
     auto const if_convergence = std::get<1>(tespy_result);

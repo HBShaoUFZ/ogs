@@ -247,13 +247,13 @@ std::unique_ptr<Process> createHeatTransportBHEProcess(
                 "file specified.");
 
         // create BHE network dataframe from Python
+        // here calls the tespyHydroSolver to get the pipe flow velocity in bhe network
         py_object->dataframe_network = py_object->initializeDataContainer();
         // clear ogs bc_node_id memory in dataframe
-        std::get<3>(py_object->dataframe_network).clear();  // ogs_bc_node_id
+        std::get<4>(py_object->dataframe_network).clear();  // ogs_bc_node_id
 
-        // here calls the tespyHydroSolver to get the pipe flow velocity in bhe
-        // network, and replace the value in flow velocity Matrix _u
-        auto const tespy_flow_rate = std::get<1>(py_object->tespyHydroSolver(0));
+        // replace the value in flow velocity Matrix _u
+        auto const tespy_flow_rate = std::get<5>(py_object->dataframe_network);
         const std::size_t n_bhe = tespy_flow_rate.size();
         if (bhes.size() != n_bhe)
             OGS_FATAL(

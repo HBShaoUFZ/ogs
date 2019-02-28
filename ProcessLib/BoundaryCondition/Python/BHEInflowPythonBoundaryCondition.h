@@ -45,7 +45,7 @@ public:
         const auto g_idx_T_out = in_out_global_indices.second;
 
         // store the bc node ids to BHE network dataframe
-        std::get<3>(_py_bc_object.dataframe_network).emplace_back(g_idx_T_out);
+        std::get<4>(_py_bc_object.dataframe_network).emplace_back(g_idx_T_out);
     }
 
 
@@ -58,7 +58,7 @@ public:
         bc_values.values.resize(1);
         auto const& data_exchange = _py_bc_object.dataframe_network;
         // get the number of all boundary nodes
-        const std::size_t n_bc_nodes = std::get<3>(data_exchange).size();
+        const std::size_t n_bc_nodes = std::get<4>(data_exchange).size();
 
         // get T_in bc_id
         bc_values.ids[0] = _in_out_global_indices.first;
@@ -66,22 +66,26 @@ public:
         // get T_out bc_id
         auto const boundary_node_id = _in_out_global_indices.second;
 
-        // return T_in from currently BHE dataframe column 2
+        // return T_in from currently BHE dataframe column 2,
+        // update flowrate and HeatTransferCoefficients for each BHE 
         for (std::size_t i = 0; i < n_bc_nodes; i++)
         {
             // auto pair_flag_value =
             // _bc_data.bc_object->getDirichletBCValue(boundary_node_id);
-            auto const dataframe_node_id = std::get<3>(data_exchange);
-            auto const dataframe_Tin_val = std::get<1>(data_exchange);
+            auto const dataframe_node_id = std::get<4>(data_exchange);
+            auto const dataframe_Tin_val = std::get<2>(data_exchange);
+            auto const dataframe_BHE_flowrate = std::get<5>(data_exchange);
             if (dataframe_node_id[i] == boundary_node_id)
             {
                 bc_values.values[0] = dataframe_Tin_val[i];
+                _bhe.updateHeatTransferCoefficients(dataframe_BHE_flowrate[i]);
                 break;
             }
         }
 
+
         // store the current time to network dataframe
-        std::get<4>(_py_bc_object.dataframe_network) = t;
+        std::get<1>(_py_bc_object.dataframe_network) = t;
     }
 
 private:
