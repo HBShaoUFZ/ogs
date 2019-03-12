@@ -59,15 +59,15 @@ struct HeatTransportBHEProcessData
           py_bc_object(py_bc_object_)
 #else
     HeatTransportBHEProcessData(
-        Parameter<double> const& thermal_conductivity_solid_,
-        Parameter<double> const& thermal_conductivity_fluid_,
-        Parameter<double> const& thermal_conductivity_gas_,
-        Parameter<double> const& heat_capacity_solid_,
-        Parameter<double> const& heat_capacity_fluid_,
-        Parameter<double> const& heat_capacity_gas_,
-        Parameter<double> const& density_solid_,
-        Parameter<double> const& density_fluid_,
-        Parameter<double> const& density_gas_,
+        ParameterLib::Parameter<double> const& thermal_conductivity_solid_,
+        ParameterLib::Parameter<double> const& thermal_conductivity_fluid_,
+        ParameterLib::Parameter<double> const& thermal_conductivity_gas_,
+        ParameterLib::Parameter<double> const& heat_capacity_solid_,
+        ParameterLib::Parameter<double> const& heat_capacity_fluid_,
+        ParameterLib::Parameter<double> const& heat_capacity_gas_,
+        ParameterLib::Parameter<double> const& density_solid_,
+        ParameterLib::Parameter<double> const& density_fluid_,
+        ParameterLib::Parameter<double> const& density_gas_,
         std::vector<BHE::BHETypes>&& vec_BHEs_,
         bool const& if_bhe_network_exist_python_bc_)
         : thermal_conductivity_solid(thermal_conductivity_solid_),

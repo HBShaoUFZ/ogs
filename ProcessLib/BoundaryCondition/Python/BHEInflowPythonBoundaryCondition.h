@@ -67,7 +67,7 @@ public:
         auto const boundary_node_id = _in_out_global_indices.second;
 
         // return T_in from currently BHE dataframe column 2,
-        // update flowrate and HeatTransferCoefficients for each BHE 
+        // update flowrate and HeatTransferCoefficients for each BHE
         for (std::size_t i = 0; i < n_bc_nodes; i++)
         {
             // auto pair_flag_value =
