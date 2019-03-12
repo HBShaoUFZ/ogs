@@ -2,8 +2,14 @@ APPEND_SOURCE_FILES(SOURCES)
 APPEND_SOURCE_FILES(SOURCES BHE)
 APPEND_SOURCE_FILES(SOURCES BoundaryConditions)
 APPEND_SOURCE_FILES(SOURCES LocalAssemblers)
-
 add_library(HeatTransportBHE ${SOURCES})
+
+if(OGS_USE_PYTHON)
+    target_link_libraries(HeatTransportBHE PUBLIC ProcessLib PRIVATE pybind11::pybind11)
+else()
+    target_link_libraries(HeatTransportBHE PUBLIC ProcessLib)
+endif()
+
 if(BUILD_SHARED_LIBS)
     install(TARGETS HeatTransportBHE LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif()
