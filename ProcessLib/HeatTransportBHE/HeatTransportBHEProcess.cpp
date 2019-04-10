@@ -17,9 +17,9 @@
 #include "ProcessLib/HeatTransportBHE/LocalAssemblers/HeatTransportBHELocalAssemblerBHE.h"
 #include "ProcessLib/HeatTransportBHE/LocalAssemblers/HeatTransportBHELocalAssemblerSoil.h"
 
-#include "ProcessLib/BoundaryCondition/BHEBottomDirichletBoundaryCondition.h"
-#include "ProcessLib/BoundaryCondition/BHEInflowDirichletBoundaryCondition.h"
 #include "ProcessLib/BoundaryCondition/Python/BHEInflowPythonBoundaryCondition.h"
+#include "ProcessLib/HeatTransportBHE/BoundaryConditions/BHEBottomDirichletBoundaryCondition.h"
+#include "ProcessLib/HeatTransportBHE/BoundaryConditions/BHEInflowDirichletBoundaryCondition.h"
 
 namespace ProcessLib
 {
@@ -324,10 +324,13 @@ void HeatTransportBHEProcess::createBHEBoundaryConditionTopBottom(
                 {
                     // Top, inflow, normal case
                     bcs.addBoundaryCondition(
-                        ProcessLib::createBHEInflowDirichletBoundaryCondition(
-                            get_global_bhe_bc_indices(bc_top_node_id,
-                                                      in_out_component_id),
-                            bhe));
+                        ProcessLib::HeatTransportBHE::
+                            createBHEInflowDirichletBoundaryCondition(
+                                get_global_bhe_bc_indices(bc_top_node_id,
+                                                          in_out_component_id),
+                                [&bhe](double const T, double const t) {
+                                    return bhe.updateFlowRateAndTemperature(T, t);
+                                }));
                 }
                 // Bottom, outflow, all cases
                 bcs.addBoundaryCondition(
