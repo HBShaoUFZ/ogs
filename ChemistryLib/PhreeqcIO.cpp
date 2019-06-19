@@ -308,14 +308,14 @@ std::istream& operator>>(std::istream& in, PhreeqcIO& phreeqc_io)
     auto const& output = *phreeqc_io._output;
     auto const& dropped_item_ids = output.dropped_item_ids;
 
-    int const num_skipped_lines = phreeqc_io._surfaces.empty() ? 1 : 2;
-
     std::size_t const num_chemical_systems =
         phreeqc_io._aqueous_solutions.size();
     for (std::size_t chemical_system_id = 0;
          chemical_system_id < num_chemical_systems;
          ++chemical_system_id)
     {
+        auto const& surfaces = phreeqc_io._surfaces[chemical_system_id];
+        int const num_skipped_lines = surfaces.empty() ? 1 : 2;
         // Skip equilibrium calculation result of initial solution
         for (int i = 0; i < num_skipped_lines; ++i)
             in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
