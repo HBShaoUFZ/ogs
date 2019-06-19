@@ -1146,3 +1146,20 @@ AddTest(
     KineticReactant2_2d_pcs_4_ts_16_t_1600.000000_expected.vtu KineticReactant2_2d_pcs_4_ts_16_t_1600.000000.vtu H H 1e-10 1e-16
     KineticReactant2_2d_pcs_4_ts_20_t_2000.000000_expected.vtu KineticReactant2_2d_pcs_4_ts_20_t_2000.000000.vtu H H 1e-10 1e-16
 )
+
+AddTest(
+    NAME 1D_ReactiveMassTransport_SurfaceBlockTest
+    PATH Parabolic/ComponentTransport/ReactiveTransport/Surface
+    EXECUTABLE ogs
+    EXECUTABLE_ARGS RadionuclidesTransport.prj
+    WRAPPER time
+    TESTER vtkdiff
+    REQUIREMENTS NOT OGS_USE_MPI
+    DIFF_DATA
+    RadionuclidesTransport_pcs_13_ts_10_t_10000.000000_expected.vtu RadionuclidesTransport_pcs_13_ts_10_t_10000.000000.vtu U(6) U(6) 1e-10 1e-16
+    RadionuclidesTransport_pcs_13_ts_10_t_20000.000000_expected.vtu RadionuclidesTransport_pcs_13_ts_10_t_20000.000000.vtu U(6) U(6) 1e-10 1e-16
+    RadionuclidesTransport_pcs_13_ts_10_t_30000.000000_expected.vtu RadionuclidesTransport_pcs_13_ts_10_t_30000.000000.vtu U(6) U(6) 1e-10 1e-16
+    RadionuclidesTransport_pcs_13_ts_10_t_40000.000000_expected.vtu RadionuclidesTransport_pcs_13_ts_10_t_40000.000000.vtu U(6) U(6) 1e-10 1e-16
+    RadionuclidesTransport_pcs_13_ts_10_t_50000.000000_expected.vtu RadionuclidesTransport_pcs_13_ts_10_t_50000.000000.vtu U(6) U(6) 1e-10 1e-16
+    RUNTIME 285
+)
