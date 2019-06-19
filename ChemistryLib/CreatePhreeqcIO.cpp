@@ -18,10 +18,12 @@
 #include "PhreeqcIOData/CreateEquilibriumPhase.h"
 #include "PhreeqcIOData/CreateKineticReactant.h"
 #include "PhreeqcIOData/CreateReactionRate.h"
+#include "PhreeqcIOData/CreateSurface.h"
 #include "PhreeqcIOData/CreateUserPunch.h"
 #include "PhreeqcIOData/EquilibriumPhase.h"
 #include "PhreeqcIOData/KineticReactant.h"
 #include "PhreeqcIOData/ReactionRate.h"
+#include "PhreeqcIOData/Surface.h"
 #include "PhreeqcIOData/UserPunch.h"
 
 namespace ChemistryLib
@@ -105,6 +107,13 @@ std::unique_ptr<PhreeqcIO> createPhreeqcIO(
         //! \ogs_file_param{prj__chemical_system__rates}
         config.getConfigSubtreeOptional("rates"));
 
+    // surface
+    auto surface_per_chem_sys = createSurface(
+        //! \ogs_file_param{prj__chemical_system__surface}
+        config.getConfigSubtreeOptional("surface"));
+    std::vector<std::vector<SurfaceSite>> surfaces(num_chemical_systems,
+                                                   surface_per_chem_sys);
+
     // user punch
     auto user_punch = createUserPunch(
         //! \ogs_file_param{prj__chemical_system__user_punch}
@@ -121,7 +130,7 @@ std::unique_ptr<PhreeqcIO> createPhreeqcIO(
         project_file_name, std::move(path_to_database),
         std::move(aqueous_solutions), std::move(equilibrium_phases),
         std::move(kinetic_reactants), std::move(reaction_rates),
-        std::move(user_punch), std::move(output),
+        std::move(surfaces), std::move(user_punch), std::move(output),
         process_id_to_component_name_map);
 }
 }  // namespace ChemistryLib

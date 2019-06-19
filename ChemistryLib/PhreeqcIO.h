@@ -17,6 +17,7 @@
 #include "PhreeqcIOData/EquilibriumPhase.h"
 #include "PhreeqcIOData/KineticReactant.h"
 #include "PhreeqcIOData/ReactionRate.h"
+#include "PhreeqcIOData/Surface.h"
 #include "PhreeqcIOData/UserPunch.h"
 
 namespace ChemistryLib
@@ -36,6 +37,7 @@ public:
               std::vector<EquilibriumPhase>&& equilibrium_phases,
               std::vector<KineticReactant>&& kinetic_reactants,
               std::vector<ReactionRate>&& reaction_rates,
+              std::vector<std::vector<SurfaceSite>>&& surfaces,
               std::unique_ptr<UserPunch>&& user_punch,
               std::unique_ptr<Output>&& output,
               std::vector<std::pair<int, std::string>> const&
@@ -69,6 +71,7 @@ private:
     std::vector<EquilibriumPhase> _equilibrium_phases;
     std::vector<KineticReactant> _kinetic_reactants;
     std::vector<ReactionRate> const _reaction_rates;
+    std::vector<std::vector<SurfaceSite>> _surfaces;
     std::unique_ptr<UserPunch> const _user_punch;
     std::unique_ptr<Output> const _output;
     std::vector<std::pair<int, std::string>> const&
