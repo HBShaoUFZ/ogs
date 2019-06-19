@@ -51,7 +51,7 @@ private:
     static const bool display_time_step = false;
     static const bool display_pH = true;
     static const bool display_pe = true;
-    static const bool use_high_precision = true;
+    static const bool use_high_precision = false;
 };
 
 enum class ItemType
