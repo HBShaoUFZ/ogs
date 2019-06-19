@@ -17,11 +17,13 @@
 #include "PhreeqcIOData/CreateAqueousSolution.h"
 #include "PhreeqcIOData/CreateEquilibriumPhase.h"
 #include "PhreeqcIOData/CreateKineticReactant.h"
+#include "PhreeqcIOData/CreateKnobs.h"
 #include "PhreeqcIOData/CreateReactionRate.h"
 #include "PhreeqcIOData/CreateSurface.h"
 #include "PhreeqcIOData/CreateUserPunch.h"
 #include "PhreeqcIOData/EquilibriumPhase.h"
 #include "PhreeqcIOData/KineticReactant.h"
+#include "PhreeqcIOData/Knobs.h"
 #include "PhreeqcIOData/ReactionRate.h"
 #include "PhreeqcIOData/Surface.h"
 #include "PhreeqcIOData/UserPunch.h"
@@ -126,11 +128,16 @@ std::unique_ptr<PhreeqcIO> createPhreeqcIO(
     auto output = createOutput(components_per_chem_sys, equilibrium_phases,
                                kinetic_reactants, project_file_name);
 
+    // knobs
+    auto knobs = createKnobs(
+        //! \ogs_file_param{prj__chemical_system__knobs}
+        config.getConfigSubtreeOptional("knobs"));
+
     return std::make_unique<PhreeqcIO>(
         project_file_name, std::move(path_to_database),
         std::move(aqueous_solutions), std::move(equilibrium_phases),
         std::move(kinetic_reactants), std::move(reaction_rates),
         std::move(surfaces), std::move(user_punch), std::move(output),
-        process_id_to_component_name_map);
+        std::move(knobs), process_id_to_component_name_map);
 }
 }  // namespace ChemistryLib

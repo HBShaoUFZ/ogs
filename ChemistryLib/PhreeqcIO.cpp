@@ -41,6 +41,7 @@ PhreeqcIO::PhreeqcIO(
     std::vector<std::vector<SurfaceSite>>&& surfaces,
     std::unique_ptr<UserPunch>&& user_punch,
     std::unique_ptr<Output>&& output,
+    std::unique_ptr<Knobs>&& knobs,
     std::vector<std::pair<int, std::string>> const&
         process_id_to_component_name_map)
     : _phreeqc_input_file(project_file_name + "_phreeqc.inp"),
@@ -52,6 +53,7 @@ PhreeqcIO::PhreeqcIO(
       _surfaces(std::move(surfaces)),
       _user_punch(std::move(user_punch)),
       _output(std::move(output)),
+      _knobs(std::move(knobs)),
       _process_id_to_component_name_map(process_id_to_component_name_map)
 {
     // initialize phreeqc instance
@@ -196,6 +198,9 @@ void PhreeqcIO::writeInputsToFile()
 
 std::ostream& operator<<(std::ostream& os, PhreeqcIO const& phreeqc_io)
 {
+    os << "KNOBS" << "\n";
+    os << *phreeqc_io._knobs << "\n";
+
     os << "SELECTED_OUTPUT" << "\n";
     os << *phreeqc_io._output << "\n";
 

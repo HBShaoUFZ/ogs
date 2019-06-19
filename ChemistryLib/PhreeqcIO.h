@@ -16,6 +16,7 @@
 #include "PhreeqcIOData/AqueousSolution.h"
 #include "PhreeqcIOData/EquilibriumPhase.h"
 #include "PhreeqcIOData/KineticReactant.h"
+#include "PhreeqcIOData/Knobs.h"
 #include "PhreeqcIOData/ReactionRate.h"
 #include "PhreeqcIOData/Surface.h"
 #include "PhreeqcIOData/UserPunch.h"
@@ -40,6 +41,7 @@ public:
               std::vector<std::vector<SurfaceSite>>&& surfaces,
               std::unique_ptr<UserPunch>&& user_punch,
               std::unique_ptr<Output>&& output,
+              std::unique_ptr<Knobs>&& knobs,
               std::vector<std::pair<int, std::string>> const&
                   process_id_to_component_name_map);
 
@@ -74,6 +76,7 @@ private:
     std::vector<std::vector<SurfaceSite>> _surfaces;
     std::unique_ptr<UserPunch> const _user_punch;
     std::unique_ptr<Output> const _output;
+    std::unique_ptr<Knobs> const _knobs;
     std::vector<std::pair<int, std::string>> const&
         _process_id_to_component_name_map;
     double _dt = std::numeric_limits<double>::quiet_NaN();
