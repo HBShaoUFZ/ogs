@@ -13,12 +13,20 @@
 namespace ChemistryLib
 {
 std::unique_ptr<UserPunch> createUserPunch(
+    std::size_t const& num_chemical_systems,
     boost::optional<BaseLib::ConfigTree> const& config)
 {
     if (!config)
         return {};
 
-    auto headline = config->getConfigParameter<std::string>("headline");
+    auto secondary_variable_names =
+        config->getConfigParameter<std::vector<std::string>>("headline");
+
+    std::vector<SecondaryVariable> secondary_variables_per_chem_sys;
+    for (auto& variable_name : secondary_variable_names)
+        secondary_variables_per_chem_sys.emplace_back(std::move(variable_name));
+    std::vector<std::vector<SecondaryVariable>> secondary_variables(
+        num_chemical_systems, secondary_variables_per_chem_sys);
 
     std::vector<std::string> statements;
     auto const statements_config =
@@ -30,7 +38,7 @@ std::unique_ptr<UserPunch> createUserPunch(
         statements_config.getConfigParameterList<std::string>("statement"))
         statements.push_back(statement);
 
-    return std::make_unique<UserPunch>(std::move(headline),
+    return std::make_unique<UserPunch>(std::move(secondary_variables),
                                        std::move(statements));
 }
 }  // namespace ChemistryLib

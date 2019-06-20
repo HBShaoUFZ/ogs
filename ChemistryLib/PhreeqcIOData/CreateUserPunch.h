@@ -25,5 +25,6 @@ struct UserPunch;
 namespace ChemistryLib
 {
 std::unique_ptr<UserPunch> createUserPunch(
+    std::size_t const& num_chemical_systems,
     boost::optional<BaseLib::ConfigTree> const& config);
 }  // namespace ChemistryLib

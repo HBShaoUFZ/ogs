@@ -15,7 +15,13 @@ namespace ChemistryLib
 {
 std::ostream& operator<<(std::ostream& os, UserPunch const& user_punch)
 {
-    os << "-headings " << user_punch.headline << "\n";
+    os << "-headings ";
+    auto const& secondary_variables = user_punch.secondary_variables;
+    auto const& secondary_variables_per_chem_sys = secondary_variables.begin();
+    for (auto& secondary_variable : *secondary_variables_per_chem_sys)
+        os << secondary_variable.name.c_str() << " ";
+    os << "\n";
+
     os << "-start" << "\n";
     int line_number = 1;
     for (auto const& statement : user_punch.statements)

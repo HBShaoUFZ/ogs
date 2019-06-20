@@ -117,16 +117,21 @@ std::unique_ptr<PhreeqcIO> createPhreeqcIO(
                                                    surface_per_chem_sys);
 
     // user punch
-    auto user_punch = createUserPunch(
-        //! \ogs_file_param{prj__chemical_system__user_punch}
-        config.getConfigSubtreeOptional("user_punch"));
+    auto user_punch =
+        createUserPunch(num_chemical_systems,
+                        //! \ogs_file_param{prj__chemical_system__user_punch}
+                        config.getConfigSubtreeOptional("user_punch"));
 
     // output
+    auto const& secondary_variables = user_punch->secondary_variables;
+    auto const& secondary_variables_per_chem_sys = secondary_variables.begin();
     auto const project_file_name = BaseLib::joinPaths(
         output_directory,
         BaseLib::extractBaseNameWithoutExtension(config.getProjectFileName()));
-    auto output = createOutput(components_per_chem_sys, equilibrium_phases,
-                               kinetic_reactants, project_file_name);
+    auto output =
+        createOutput(components_per_chem_sys, equilibrium_phases_per_chem_sys,
+                     kinetic_reactants_per_chem_sys,
+                     *secondary_variables_per_chem_sys, project_file_name);
 
     // knobs
     auto knobs = createKnobs(

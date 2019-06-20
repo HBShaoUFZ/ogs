@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 
+#include "ChemistryLib/Output.h"
+
 namespace BaseLib
 {
 class ConfigTree;
@@ -20,17 +22,28 @@ class ConfigTree;
 
 namespace ChemistryLib
 {
+struct SecondaryVariable
+{
+    SecondaryVariable(std::string&& name_) : name(std::move(name_)) {}
+
+    std::string const name;
+    double value = std::numeric_limits<double>::quiet_NaN();
+    static const ItemType item_type = ItemType::SecondaryVariable;
+};
+
 struct UserPunch
 {
-    UserPunch(std::string&& headline_, std::vector<std::string>&& statements_)
-        : headline(headline_), statements(statements_)
+    UserPunch(
+        std::vector<std::vector<SecondaryVariable>>&& secondary_variables_,
+        std::vector<std::string>&& statements_)
+        : secondary_variables(secondary_variables_), statements(statements_)
     {
     }
 
     friend std::ostream& operator<<(std::ostream& os,
                                     UserPunch const& user_punch);
 
-    std::string const headline;
+    std::vector<std::vector<SecondaryVariable>> secondary_variables;
     std::vector<std::string> const statements;
 };
 }  // namespace ChemistryLib

@@ -60,7 +60,8 @@ enum class ItemType
     pe,
     Component,
     EquilibriumPhase,
-    KineticReactant
+    KineticReactant,
+    SecondaryVariable
 };
 
 struct OutputItem
