@@ -34,7 +34,7 @@ std::ostream& operator<<(std::ostream& os,
             break;
         case MeansOfAdjustingCharge::Unspecified:
             os << "pH " << aqueous_solution.pH << "\n";
-            os << "pe " << aqueous_solution.pe << "\n";
+//            os << "pe " << aqueous_solution.pe << "\n";
             break;
     }
 
