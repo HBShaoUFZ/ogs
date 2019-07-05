@@ -254,8 +254,8 @@ std::ostream& operator<<(std::ostream& os, PhreeqcIO const& phreeqc_io)
         if (!surface.empty())
         {
             os << "SURFACE " << chemical_system_id + 1 << "\n";
-            os << "-equilibrate with solution " << chemical_system_id + 1
-               << "\n";
+//            os << "-equilibrate with solution " << chemical_system_id + 1
+//               << "\n";
             os << "-sites_units DENSITY" << "\n";
             os << surface << "\n";
         }
@@ -319,8 +319,9 @@ std::istream& operator>>(std::istream& in, PhreeqcIO& phreeqc_io)
          chemical_system_id < num_chemical_systems;
          ++chemical_system_id)
     {
-        auto const& surfaces = phreeqc_io._surfaces[chemical_system_id];
-        int const num_skipped_lines = surfaces.empty() ? 1 : 2;
+//        auto const& surfaces = phreeqc_io._surfaces[chemical_system_id];
+//        int const num_skipped_lines = surfaces.empty() ? 1 : 2;
+        int const num_skipped_lines = 1;
         // Skip equilibrium calculation result of initial solution
         for (int i = 0; i < num_skipped_lines; ++i)
             in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
