@@ -128,10 +128,9 @@ std::unique_ptr<PhreeqcIO> createPhreeqcIO(
     auto const project_file_name = BaseLib::joinPaths(
         output_directory,
         BaseLib::extractBaseNameWithoutExtension(config.getProjectFileName()));
-    auto output =
-        createOutput(components_per_chem_sys, equilibrium_phases_per_chem_sys,
-                     kinetic_reactants_per_chem_sys,
-                     *secondary_variables_per_chem_sys, project_file_name);
+    auto output = createOutput(
+        components_per_chem_sys, equilibrium_phases, kinetic_reactants,
+        *secondary_variables_per_chem_sys, project_file_name);
 
     // knobs
     auto knobs = createKnobs(

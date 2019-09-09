@@ -432,6 +432,7 @@ bool TimeLoop::loop()
     _process_solutions = setInitialConditions(_start_time, _per_process_data);
 
     const bool is_staggered_coupling = setCoupledSolutions();
+    _chemical_system->InitializeChemistrySystems(_process_solutions);
 
     // Output initial conditions
     {

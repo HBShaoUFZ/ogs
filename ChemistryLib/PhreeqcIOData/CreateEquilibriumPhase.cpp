@@ -52,8 +52,15 @@ std::vector<EquilibriumPhase> createEquilibriumPhases(
             1);
         std::fill(amount->begin(), amount->end(), initial_amount);
 
+        auto amount_prev = MeshLib::getOrCreateMeshProperty<double>(
+            const_cast<MeshLib::Mesh&>(mesh),
+            name + "_prev",
+            MeshLib::MeshItemType::Node,
+            1);
+        std::fill(amount_prev->begin(), amount_prev->end(), initial_amount);
+
         equilibrium_phases.emplace_back(
-            std::move(name), amount, saturation_index);
+            std::move(name), amount, amount_prev, saturation_index);
     }
 
     return equilibrium_phases;

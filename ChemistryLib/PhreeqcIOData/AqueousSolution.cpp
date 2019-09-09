@@ -13,6 +13,76 @@
 
 namespace ChemistryLib
 {
+void AqueousSolution::output(std::size_t const& chemical_system_id,
+                             std::ostream& os) const
+{
+    os << "SOLUTION " << 2 * chemical_system_id + 1 << "\n";
+
+    os << "temp " << temperature << "\n";
+
+    os << "pressure " << pressure << "\n";
+
+    switch (means_of_adjusting_charge)
+    {
+        case MeansOfAdjustingCharge::pH:
+            os << "pH " << pH << " charge"
+               << "\n";
+            os << "pe " << pe << "\n";
+            break;
+        case MeansOfAdjustingCharge::pe:
+            os << "pH " << pH << "\n";
+            os << "pe " << pe << " charge"
+               << "\n";
+            break;
+        case MeansOfAdjustingCharge::Unspecified:
+            os << "pH " << pH_prev << "\n";
+            //            os << "pe " << aqueous_solution.pe << "\n";
+            break;
+    }
+
+    os << "units mol/kgw\n";
+
+    for (auto const& component : components)
+    {
+        os << component.name << " " << component.amount_prev << "\n";
+    }
+
+    os << "\n";
+
+    os << "SOLUTION " << 2 * chemical_system_id + 2 << "\n";
+
+    os << "temp " << temperature << "\n";
+
+    os << "pressure " << pressure << "\n";
+
+    switch (means_of_adjusting_charge)
+    {
+        case MeansOfAdjustingCharge::pH:
+            os << "pH " << pH << " charge"
+               << "\n";
+            os << "pe " << pe << "\n";
+            break;
+        case MeansOfAdjustingCharge::pe:
+            os << "pH " << pH << "\n";
+            os << "pe " << pe << " charge"
+               << "\n";
+            break;
+        case MeansOfAdjustingCharge::Unspecified:
+            os << "pH " << pH << "\n";
+            //            os << "pe " << aqueous_solution.pe << "\n";
+            break;
+    }
+
+    os << "units mol/kgw\n";
+
+    for (auto const& component : components)
+    {
+        os << component.name << " " << component.amount << "\n";
+    }
+
+    os << "\n";
+}
+
 std::ostream& operator<<(std::ostream& os,
                          AqueousSolution const& aqueous_solution)
 {

@@ -23,6 +23,7 @@ struct Component
 
     std::string const name;
     double amount = std::numeric_limits<double>::quiet_NaN();
+    double amount_prev = std::numeric_limits<double>::quiet_NaN();
     static const ItemType item_type = ItemType::Component;
 };
 
@@ -48,12 +49,15 @@ struct AqueousSolution
     {
     }
 
+    void output(std::size_t const& chemical_system_id, std::ostream& os) const;
+
     friend std::ostream& operator<<(std::ostream& os,
                                     AqueousSolution const& aqueous_solution);
 
     double temperature;
     double pressure;
     double pH = std::numeric_limits<double>::quiet_NaN();
+    double pH_prev = std::numeric_limits<double>::quiet_NaN();
     double pe;
     std::vector<Component> components;
     MeansOfAdjustingCharge const means_of_adjusting_charge;
