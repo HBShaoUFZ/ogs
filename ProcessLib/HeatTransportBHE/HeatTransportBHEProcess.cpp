@@ -125,7 +125,7 @@ void HeatTransportBHEProcess::constructDofTable()
             std::move(all_mesh_subsets),
             vec_n_components,
             vec_var_elements,
-            NumLib::ComponentOrder::BY_COMPONENT);
+            NumLib::ComponentOrder::BY_LOCATION);
 
     // in case of debugging the dof table, activate the following line
     // std::cout << *_local_to_global_index_map << "\n";
