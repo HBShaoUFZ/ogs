@@ -42,7 +42,7 @@ HeatTransportBHEProcess::HeatTransportBHEProcess(
       _process_data(std::move(process_data)),
       _bheMeshData(getBHEDataInMesh(mesh))
 {
-#ifndef OGS_USE_PETSC
+/*
     if (_bheMeshData.BHE_mat_IDs.size() !=
         _process_data._vec_BHE_property.size())
     {
@@ -52,7 +52,7 @@ HeatTransportBHEProcess::HeatTransportBHEProcess(
             _process_data._vec_BHE_property.size(),
             _bheMeshData.BHE_mat_IDs.size());
     }
-#endif
+*/
 
     auto material_ids = MeshLib::materialIDs(mesh);
     if (material_ids == nullptr)
