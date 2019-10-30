@@ -94,9 +94,9 @@ void HeatTransportBHEProcess::constructDofTable()
     // BHE nodes with BHE type dependend number of variables.
     //
     int const n_BHEs = _process_data._vec_BHE_property.size();
-    assert(n_BHEs == static_cast<int>(_bheMeshData.BHE_mat_IDs.size()));
-    assert(n_BHEs == static_cast<int>(_bheMeshData.BHE_nodes.size()));
-    assert(n_BHEs == static_cast<int>(_bheMeshData.BHE_elements.size()));
+    // assert(n_BHEs == static_cast<int>(_bheMeshData.BHE_mat_IDs.size()));
+    // assert(n_BHEs == static_cast<int>(_bheMeshData.BHE_nodes.size()));
+    // assert(n_BHEs == static_cast<int>(_bheMeshData.BHE_elements.size()));
 
     // the BHE nodes need to be cherry-picked from the vector
     for (int i = 0; i < n_BHEs; i++)
