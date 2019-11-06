@@ -177,8 +177,17 @@
             <timesteps>
                 <pair>
                     <repeat> 1</repeat>
-                    <each_steps> 2 </each_steps>
+                    <each_steps> 10 </each_steps>
                 </pair>
+				<!-- use the following for full simulation -->
+				<!-- <pair> -->
+                    <!-- <repeat> 10 </repeat> -->
+                    <!-- <each_steps> 1 </each_steps> -->
+                <!-- </pair> -->
+				<!-- <pair> -->
+                    <!-- <repeat> 1 </repeat> -->
+                    <!-- <each_steps> 10 </each_steps> -->
+                <!-- </pair> -->
             </timesteps>
             <variables>
                 <variable>temperature_soil</variable>
